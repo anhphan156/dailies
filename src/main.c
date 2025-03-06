@@ -14,14 +14,14 @@ int main() {
         init_pair(3, COLOR_BLUE, COLOR_BLACK);
         init_pair(4, COLOR_YELLOW, COLOR_BLACK);
         init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
-        init_pair(6, COLOR_CYAN, COLOR_BLACK);
-        init_pair(7, COLOR_WHITE, COLOR_BLACK);
+        init_pair(6, COLOR_WHITE, COLOR_BLACK);
+        init_pair(7, COLOR_CYAN, COLOR_BLACK);
     }
 
     int num = 0;
     while (1) {
         getch();
-        attrset(COLOR_PAIR(num & 8));
+        attrset(COLOR_PAIR(num % 8));
         num += 1;
     }
 
