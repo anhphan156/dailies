@@ -26,6 +26,7 @@
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             rust-toolchain
+            act
           ];
           shellHook = ''
             PATH=$PATH:$HOME/.cargo/bin
