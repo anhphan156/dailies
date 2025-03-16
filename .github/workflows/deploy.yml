@@ -23,7 +23,7 @@ jobs:
         run: nix develop
 
       - name: Install trunk
-        run: cargo binstall trunk
+        run: cargo install trunk
 
       - name: Build Yew app
         run: trunk build --release --public-url ./
