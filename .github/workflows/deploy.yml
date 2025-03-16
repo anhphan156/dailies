@@ -19,16 +19,16 @@ jobs:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Enter build env
-        run: nix develop
+        run: nix build
 
-      - name: Build Yew app
-        run: trunk build --release --public-url ./dailies
+      # - name: Build Yew app
+      #   run: trunk build --release --public-url ./dailies
 
       - name: Upload static files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/
+          path: result/
 
   deploy:
     needs: build

@@ -23,6 +23,19 @@
           ];
         };
       in {
+        packages.default = pkgs.stdenvNoCC.mkDerivation {
+          name = "Dailies";
+          src = ./.;
+          nativeBuildInputs = with pkgs; [trunk rust-toolchain];
+          buildPhase = ''
+            export HOME=$(mktemp -d)
+            export CARGO_NET_GIT_FETCH_WITH_CLI=true
+            trunk build --release --public-url ./dailies
+          '';
+          installPhase = ''
+            cp -r ./dist $out
+          '';
+        };
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             rust-toolchain
