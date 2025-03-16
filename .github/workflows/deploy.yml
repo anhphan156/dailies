@@ -18,17 +18,21 @@ jobs:
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
+      # TODO: fix up the derivation to use nix build
       - name: Enter build env
-        run: nix build
+        run: nix develop
 
-      # - name: Build Yew app
-      #   run: trunk build --release --public-url ./dailies
+      - name: Install trunk
+        run: cargo install trunk
+
+      - name: Build Yew app
+        run: trunk build --release --public-url ./dailies
 
       - name: Upload static files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
-          path: result/
+          path: dist/
 
   deploy:
     needs: build

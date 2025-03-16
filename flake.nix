@@ -23,13 +23,18 @@
           ];
         };
       in {
-        packages.default = pkgs.stdenvNoCC.mkDerivation {
+        packages.default = pkgs.rustPlatform.buildRustPackage {
           name = "Dailies";
           src = ./.;
-          nativeBuildInputs = with pkgs; [trunk rust-toolchain];
+          cargoLock = {
+            lockFile = ./Cargo.lock;
+            outputHashes = {
+              "yew-0.21.0" = "sha256-P4KbppLUqnstU3JM9E3wNXOngJ0ePYLZC9LU7yPcMfQ=";
+            };
+          };
+          nativeBuildInputs = with pkgs; [trunk];
           buildPhase = ''
-            export HOME=$(mktemp -d)
-            export CARGO_NET_GIT_FETCH_WITH_CLI=true
+            cargo metadata
             trunk build --release --public-url ./dailies
           '';
           installPhase = ''
