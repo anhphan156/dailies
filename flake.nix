@@ -27,10 +27,8 @@
           packages = with pkgs; [
             rust-toolchain
             act
+            trunk
           ];
-          shellHook = ''
-            PATH=$PATH:$HOME/.cargo/bin
-          '';
         };
       }
     );

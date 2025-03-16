@@ -25,7 +25,7 @@ jobs:
         run: cargo install trunk
 
       - name: Build Yew app
-        run: trunk build --release --public-url ./
+        run: trunk build --release --public-url ./dailies
 
       - name: Upload static files as artifact
         id: deployment
