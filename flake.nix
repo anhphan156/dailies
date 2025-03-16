@@ -32,15 +32,16 @@
               "yew-0.21.0" = "sha256-P4KbppLUqnstU3JM9E3wNXOngJ0ePYLZC9LU7yPcMfQ=";
             };
           };
-
-          nativeBuildInputs = with pkgs; [trunk];
+          cargoVendorDir = "./.";
           buildPhase = ''
-            cargo metadata
-            trunk build --release --public-url ./dailies
+            export HOME=$(mktemp -d)
+            trunk build
           '';
-          installPhase = ''
-            cp -r ./dist $out
-          '';
+          installPhase = "cp -r dist $out";
+
+          nativeBuildInputs = with pkgs; [
+            trunk
+          ];
         };
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
