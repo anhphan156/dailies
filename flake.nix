@@ -28,20 +28,19 @@
           src = ./.;
           cargoLock = {
             lockFile = ./Cargo.lock;
-            outputHashes = {
-              "yew-0.21.0" = "sha256-P4KbppLUqnstU3JM9E3wNXOngJ0ePYLZC9LU7yPcMfQ=";
-            };
           };
-          cargoVendorDir = "./.";
-          buildPhase = ''
-            export HOME=$(mktemp -d)
-            trunk build
-          '';
-          installPhase = "cp -r dist $out";
 
           nativeBuildInputs = with pkgs; [
             trunk
+            lld
+            wasm-bindgen-cli
           ];
+
+          buildPhase = ''
+            export HOME=$(mktemp -d)
+            trunk build --release --public-url ./
+          '';
+          installPhase = "cp -r dist $out";
         };
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
