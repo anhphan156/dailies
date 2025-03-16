@@ -1,19 +1,36 @@
 {
-  outputs = {nixpkgs, ...}: let
-    forAllSystems = nixpkgs.lib.genAttrs ["x86_64-linux"];
-    pkgsFor = system: import nixpkgs {inherit system;};
-  in {
-    devShells = forAllSystems (system: let
-      pkgs = pkgsFor system;
-    in {
-      default = pkgs.mkShell {
-        buildInputs = with pkgs; [
-          ncurses
-        ];
-      };
-    });
-  };
+  description = "Rust Project";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+    rust-overlay.url = "github:oxalica/rust-overlay";
   };
+  outputs = {
+    nixpkgs,
+    flake-utils,
+    rust-overlay,
+    ...
+  }:
+    flake-utils.lib.eachDefaultSystem (
+      system: let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            (import rust-overlay)
+            (final: _: {
+              rust-toolchain = final.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
+            })
+          ];
+        };
+      in {
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            rust-toolchain
+          ];
+          shellHook = ''
+            PATH=$PATH:$HOME/.cargo/bin
+          '';
+        };
+      }
+    );
 }
