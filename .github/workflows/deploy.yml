@@ -21,9 +21,6 @@ jobs:
       - name: Enter build env
         run: nix develop
 
-      - name: Install trunk
-        run: cargo install trunk
-
       - name: Build Yew app
         run: trunk build --release --public-url ./dailies
 
