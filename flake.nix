@@ -32,6 +32,7 @@
               "yew-0.21.0" = "sha256-P4KbppLUqnstU3JM9E3wNXOngJ0ePYLZC9LU7yPcMfQ=";
             };
           };
+
           nativeBuildInputs = with pkgs; [trunk];
           buildPhase = ''
             cargo metadata
