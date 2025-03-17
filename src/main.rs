@@ -1,10 +1,13 @@
 use yew::prelude::*;
-
-use dailies::components::card::Card;
+use dailies::components::card_container::CardContainer;
 
 #[function_component]
 fn App() -> Html {
-    html! {<Card/>}
+    html! {
+        <div id="main">
+            <CardContainer/>
+        </div>
+    }
 }
 
 fn main() {
